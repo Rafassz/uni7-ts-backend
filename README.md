@@ -6,7 +6,6 @@ API REST completa para gerenciamento de usuários, denúncias e avisos com siste
 
 - **[START.md](START.md)** → Guia de instalação e configuração passo a passo
 - **[TESTES.md](TESTES.md)** → Exemplos de requisições para testar todos os endpoints
-- **[CORRECOES.md](CORRECOES.md)** → Detalhes das correções e especificações técnicas
 - **[INSTALACAO.md](INSTALACAO.md)** → Guia detalhado de instalação alternativa
 
 ## ⚡ Início Rápido
