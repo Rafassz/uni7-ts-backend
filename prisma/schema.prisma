@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  IdUsuario   Int         @id @default(autoincrement())
+  Ativa       Boolean     @default(true)
+  NomeUsuario String
+  Senha       String
+  
+  denuncias   Denuncia[]
+  avisos      Aviso[]
+
+  @@map("Usuarios")
+}
+
+model Denuncia {
+  IdDenuncia  Int      @id @default(autoincrement())
+  IdUsuario   Int
+  Nome        String
+  Descricao   String   @db.Text
+  Ativa       Boolean  @default(true)
+  Inclusao    DateTime @default(now())
+  Atualizacao DateTime @updatedAt
+  
+  usuario     Usuario  @relation(fields: [IdUsuario], references: [IdUsuario])
+
+  @@map("Denuncias")
+}
+
+model Aviso {
+  IdAviso     Int      @id @default(autoincrement())
+  IdUsuario   Int
+  Nome        String
+  Descricao   String   @db.Text
+  Ativa       Boolean  @default(true)
+  Inclusao    DateTime @default(now())
+  Atualizacao DateTime @updatedAt
+  
+  usuario     Usuario  @relation(fields: [IdUsuario], references: [IdUsuario])
+
+  @@map("Avisos")
+}
