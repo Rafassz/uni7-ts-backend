@@ -1,1 +1,0 @@
-{"version":3,"file":"useCase.d.ts","sourceRoot":"","sources":["../../../../src/denuncia/controller/getAll/useCase.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,mBAAmB,EAAE,MAAM,sCAAsC,CAAC;AAChF,OAAO,KAAK,EAAE,SAAS,EAAE,MAAM,iBAAiB,CAAC;AAEjD,qBAAa,qBAAqB;IAElB,OAAO,CAAC,QAAQ,CAAC,UAAU;gBAAV,UAAU,EAAE,mBAAmB;IAEtD,OAAO,IAAI,OAAO,CAAC,SAAS,EAAE,CAAC;CAGxC"}
