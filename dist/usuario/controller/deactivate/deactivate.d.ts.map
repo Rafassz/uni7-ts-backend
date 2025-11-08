@@ -1,0 +1,1 @@
+{"version":3,"file":"deactivate.d.ts","sourceRoot":"","sources":["../../../../src/usuario/controller/deactivate/deactivate.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AACjD,OAAO,EAAE,wBAAwB,EAAE,MAAM,WAAW,CAAC;AAErD,qBAAa,2BAA2B;IAExB,OAAO,CAAC,QAAQ,CAAC,OAAO;gBAAP,OAAO,EAAE,wBAAwB;IAE9D,MAAM,GAAU,KAAK,OAAO,EAAE,KAAK,QAAQ,mBAazC;CACL"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"deactivate.d.ts","sourceRoot":"","sources":["../../../../src/denuncia/controller/deactivate/deactivate.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AACjD,OAAO,EAAE,yBAAyB,EAAE,MAAM,WAAW,CAAC;AAEtD,qBAAa,4BAA4B;IAEzB,OAAO,CAAC,QAAQ,CAAC,OAAO;gBAAP,OAAO,EAAE,yBAAyB;IAE/D,MAAM,GAAU,KAAK,OAAO,EAAE,KAAK,QAAQ,mBAazC;CACL"}
