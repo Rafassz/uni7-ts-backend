@@ -13,7 +13,7 @@ http://localhost:3000
 
 ### 1. Criar Usuário (POST)
 ```bash
-curl -X POST http://localhost:3000/usuarios \
+curl -X POST http://localhost:3000/uni7/usuarios \
   -H "Content-Type: application/json" \
   -d '{
     "NomeUsuario": "João Silva",
@@ -35,18 +35,18 @@ curl -X POST http://localhost:3000/usuarios \
 
 ### 2. Criar Mais Usuários
 ```bash
-curl -X POST http://localhost:3000/usuarios \
+curl -X POST http://localhost:3000/uni7/usuarios \
   -H "Content-Type: application/json" \
   -d '{"NomeUsuario": "Maria Santos", "Senha": "maria456"}'
 
-curl -X POST http://localhost:3000/usuarios \
+curl -X POST http://localhost:3000/uni7/usuarios \
   -H "Content-Type: application/json" \
   -d '{"NomeUsuario": "Pedro Oliveira", "Senha": "pedro789"}'
 ```
 
 ### 3. Listar Todos os Usuários Ativos (GET)
 ```bash
-curl http://localhost:3000/usuarios
+curl http://localhost:3000/uni7/usuarios
 ```
 
 **Resposta esperada (200):**
@@ -67,7 +67,7 @@ curl http://localhost:3000/usuarios
 
 ### 4. Buscar Usuário por ID (GET)
 ```bash
-curl http://localhost:3000/usuarios/1
+curl http://localhost:3000/uni7/usuarios/1
 ```
 
 **Resposta esperada (200):**
@@ -81,7 +81,7 @@ curl http://localhost:3000/usuarios/1
 
 ### 5. Atualizar Usuário (PUT)
 ```bash
-curl -X PUT http://localhost:3000/usuarios/1 \
+curl -X PUT http://localhost:3000/uni7/usuarios/1 \
   -H "Content-Type: application/json" \
   -d '{
     "NomeUsuario": "João Silva Atualizado",
@@ -103,7 +103,7 @@ curl -X PUT http://localhost:3000/usuarios/1 \
 
 ### 6. Desativar Usuário - Soft Delete (PATCH)
 ```bash
-curl -X PATCH http://localhost:3000/usuarios/1/desativar
+curl -X PATCH http://localhost:3000/uni7/usuarios/1/desativar
 ```
 
 **Resposta esperada (200):**
@@ -124,7 +124,7 @@ curl -X PATCH http://localhost:3000/usuarios/1/desativar
 
 ### 1. Criar Denúncia (POST)
 ```bash
-curl -X POST http://localhost:3000/denuncias \
+curl -X POST http://localhost:3000/uni7/denuncias \
   -H "Content-Type: application/json" \
   -d '{
     "IdUsuario": 2,
@@ -155,7 +155,7 @@ curl -X POST http://localhost:3000/denuncias \
 
 ### 2. Criar Mais Denúncias
 ```bash
-curl -X POST http://localhost:3000/denuncias \
+curl -X POST http://localhost:3000/uni7/denuncias \
   -H "Content-Type: application/json" \
   -d '{
     "IdUsuario": 2,
@@ -163,7 +163,7 @@ curl -X POST http://localhost:3000/denuncias \
     "Descricao": "Identificado potencial vulnerabilidade na autenticação do sistema."
   }'
 
-curl -X POST http://localhost:3000/denuncias \
+curl -X POST http://localhost:3000/uni7/denuncias \
   -H "Content-Type: application/json" \
   -d '{
     "IdUsuario": 3,
@@ -174,7 +174,7 @@ curl -X POST http://localhost:3000/denuncias \
 
 ### 3. Listar Todas as Denúncias Ativas (GET)
 ```bash
-curl http://localhost:3000/denuncias
+curl http://localhost:3000/uni7/denuncias
 ```
 
 **Resposta esperada (200):**
@@ -198,12 +198,12 @@ curl http://localhost:3000/denuncias
 
 ### 4. Buscar Denúncia por ID (GET)
 ```bash
-curl http://localhost:3000/denuncias/1
+curl http://localhost:3000/uni7/denuncias/1
 ```
 
 ### 5. Atualizar Denúncia (PUT)
 ```bash
-curl -X PUT http://localhost:3000/denuncias/1 \
+curl -X PUT http://localhost:3000/uni7/denuncias/1 \
   -H "Content-Type: application/json" \
   -d '{
     "Nome": "Bug crítico no sistema - RESOLVIDO",
@@ -213,7 +213,7 @@ curl -X PUT http://localhost:3000/denuncias/1 \
 
 ### 6. Desativar Denúncia - Soft Delete (PATCH)
 ```bash
-curl -X PATCH http://localhost:3000/denuncias/1/desativar
+curl -X PATCH http://localhost:3000/uni7/denuncias/1/desativar
 ```
 
 **Resposta esperada (200):**
@@ -234,7 +234,7 @@ curl -X PATCH http://localhost:3000/denuncias/1/desativar
 
 ### 1. Criar Aviso (POST)
 ```bash
-curl -X POST http://localhost:3000/avisos \
+curl -X POST http://localhost:3000/uni7/avisos \
   -H "Content-Type: application/json" \
   -d '{
     "IdUsuario": 2,
@@ -265,7 +265,7 @@ curl -X POST http://localhost:3000/avisos \
 
 ### 2. Criar Mais Avisos
 ```bash
-curl -X POST http://localhost:3000/avisos \
+curl -X POST http://localhost:3000/uni7/avisos \
   -H "Content-Type: application/json" \
   -d '{
     "IdUsuario": 3,
@@ -273,7 +273,7 @@ curl -X POST http://localhost:3000/avisos \
     "Descricao": "Agora é possível exportar relatórios em formato PDF. Confira na área de relatórios."
   }'
 
-curl -X POST http://localhost:3000/avisos \
+curl -X POST http://localhost:3000/uni7/avisos \
   -H "Content-Type: application/json" \
   -d '{
     "IdUsuario": 2,
@@ -284,7 +284,7 @@ curl -X POST http://localhost:3000/avisos \
 
 ### 3. Listar Todos os Avisos Ativos (GET)
 ```bash
-curl http://localhost:3000/avisos
+curl http://localhost:3000/uni7/avisos
 ```
 
 **Resposta esperada (200):**
@@ -308,12 +308,12 @@ curl http://localhost:3000/avisos
 
 ### 4. Buscar Aviso por ID (GET)
 ```bash
-curl http://localhost:3000/avisos/1
+curl http://localhost:3000/uni7/avisos/1
 ```
 
 ### 5. Atualizar Aviso (PUT)
 ```bash
-curl -X PUT http://localhost:3000/avisos/1 \
+curl -X PUT http://localhost:3000/uni7/avisos/1 \
   -H "Content-Type: application/json" \
   -d '{
     "Nome": "Manutenção programada - ADIADA",
@@ -323,7 +323,7 @@ curl -X PUT http://localhost:3000/avisos/1 \
 
 ### 6. Desativar Aviso - Soft Delete (PATCH)
 ```bash
-curl -X PATCH http://localhost:3000/avisos/1/desativar
+curl -X PATCH http://localhost:3000/uni7/avisos/1/desativar
 ```
 
 ---
@@ -333,10 +333,10 @@ curl -X PATCH http://localhost:3000/avisos/1/desativar
 ### Teste 1: Criar denúncia com usuário inativo
 ```bash
 # Primeiro desativar um usuário
-curl -X PATCH http://localhost:3000/usuarios/1/desativar
+curl -X PATCH http://localhost:3000/uni7/usuarios/1/desativar
 
 # Tentar criar denúncia com esse usuário
-curl -X POST http://localhost:3000/denuncias \
+curl -X POST http://localhost:3000/uni7/denuncias \
   -H "Content-Type: application/json" \
   -d '{
     "IdUsuario": 1,
@@ -354,7 +354,7 @@ curl -X POST http://localhost:3000/denuncias \
 
 ### Teste 2: Criar usuário sem dados obrigatórios
 ```bash
-curl -X POST http://localhost:3000/usuarios \
+curl -X POST http://localhost:3000/uni7/usuarios \
   -H "Content-Type: application/json" \
   -d '{
     "NomeUsuario": "Teste"
@@ -370,7 +370,7 @@ curl -X POST http://localhost:3000/usuarios \
 
 ### Teste 3: Buscar registro inexistente
 ```bash
-curl http://localhost:3000/denuncias/999
+curl http://localhost:3000/uni7/denuncias/999
 ```
 
 **Resposta esperada (404):**
@@ -391,29 +391,29 @@ echo "=== Testando API de Denúncias e Avisos ==="
 echo ""
 
 echo "1. Criando usuários..."
-curl -X POST http://localhost:3000/usuarios -H "Content-Type: application/json" -d '{"NomeUsuario":"João","Senha":"123"}'
+curl -X POST http://localhost:3000/uni7/usuarios -H "Content-Type: application/json" -d '{"NomeUsuario":"João","Senha":"123"}'
 echo ""
-curl -X POST http://localhost:3000/usuarios -H "Content-Type: application/json" -d '{"NomeUsuario":"Maria","Senha":"456"}'
+curl -X POST http://localhost:3000/uni7/usuarios -H "Content-Type: application/json" -d '{"NomeUsuario":"Maria","Senha":"456"}'
 echo ""
 
 echo "2. Listando usuários..."
-curl http://localhost:3000/usuarios
+curl http://localhost:3000/uni7/usuarios
 echo ""
 
 echo "3. Criando denúncia..."
-curl -X POST http://localhost:3000/denuncias -H "Content-Type: application/json" -d '{"IdUsuario":1,"Nome":"Bug","Descricao":"Teste"}'
+curl -X POST http://localhost:3000/uni7/denuncias -H "Content-Type: application/json" -d '{"IdUsuario":1,"Nome":"Bug","Descricao":"Teste"}'
 echo ""
 
 echo "4. Criando aviso..."
-curl -X POST http://localhost:3000/avisos -H "Content-Type: application/json" -d '{"IdUsuario":1,"Nome":"Aviso","Descricao":"Teste"}'
+curl -X POST http://localhost:3000/uni7/avisos -H "Content-Type: application/json" -d '{"IdUsuario":1,"Nome":"Aviso","Descricao":"Teste"}'
 echo ""
 
 echo "5. Listando denúncias..."
-curl http://localhost:3000/denuncias
+curl http://localhost:3000/uni7/denuncias
 echo ""
 
 echo "6. Listando avisos..."
-curl http://localhost:3000/avisos
+curl http://localhost:3000/uni7/avisos
 echo ""
 
 echo "=== Testes concluídos ==="
@@ -434,14 +434,14 @@ Importe esta coleção JSON para Postman/Insomnia:
     {
       "name": "Criar Usuário",
       "method": "POST",
-      "url": "http://localhost:3000/usuarios",
+      "url": "http://localhost:3000/uni7/usuarios",
       "headers": [{"key": "Content-Type", "value": "application/json"}],
       "body": {"NomeUsuario": "Teste", "Senha": "123"}
     },
     {
       "name": "Listar Usuários",
       "method": "GET",
-      "url": "http://localhost:3000/usuarios"
+      "url": "http://localhost:3000/uni7/usuarios"
     }
   ]
 }
