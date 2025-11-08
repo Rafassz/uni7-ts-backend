@@ -1,1 +1,0 @@
-{"version":3,"file":"getById.d.ts","sourceRoot":"","sources":["../../../../src/aviso/controller/getById/getById.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AACjD,OAAO,EAAE,mBAAmB,EAAE,MAAM,WAAW,CAAC;AAEhD,qBAAa,sBAAsB;IAEnB,OAAO,CAAC,QAAQ,CAAC,OAAO;gBAAP,OAAO,EAAE,mBAAmB;IAEzD,MAAM,GAAU,KAAK,OAAO,EAAE,KAAK,QAAQ,mBAUzC;CACL"}

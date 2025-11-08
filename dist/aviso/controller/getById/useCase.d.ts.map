@@ -1,1 +1,0 @@
-{"version":3,"file":"useCase.d.ts","sourceRoot":"","sources":["../../../../src/aviso/controller/getById/useCase.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,gBAAgB,EAAE,MAAM,mCAAmC,CAAC;AAC1E,OAAO,KAAK,EAAE,SAAS,EAAE,MAAM,iBAAiB,CAAC;AAEjD,qBAAa,mBAAmB;IAEhB,OAAO,CAAC,QAAQ,CAAC,UAAU;gBAAV,UAAU,EAAE,gBAAgB;IAEnD,OAAO,CAAC,EAAE,EAAE,MAAM,GAAG,OAAO,CAAC,SAAS,CAAC;CAYhD"}
