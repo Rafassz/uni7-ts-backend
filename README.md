@@ -8,11 +8,6 @@ API REST completa para gerenciamento de usuários, denúncias e avisos com siste
 
 - **[START.md](START.md)** → Guia de instalação e configuração passo a passo
 - **[TESTES.md](TESTES.md)** → Exemplos de requisições para testar todos os endpoints
-- **[ARQUITETURA-MODULAR.md](ARQUITETURA-MODULAR.md)** → 🆕 **Arquitetura modular por domínio**
-- **[REORGANIZACAO-MODULAR.md](REORGANIZACAO-MODULAR.md)** → 🆕 Resumo da reorganização
-- **[SOLID.md](SOLID.md)** → Documentação completa da arquitetura SOLID
-- **[MIGRACAO-SOLID.md](MIGRACAO-SOLID.md)** → Resumo da migração MVP → SOLID
-- **[DIAGRAMAS.md](DIAGRAMAS.md)** → Diagramas visuais da arquitetura
 
 ## ⚡ Início Rápido
 
