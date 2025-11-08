@@ -1,0 +1,28 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const create_1 = require("../controller/create");
+const getAll_1 = require("../controller/getAll");
+const getById_1 = require("../controller/getById");
+const update_1 = require("../controller/update");
+const deactivate_1 = require("../controller/deactivate");
+const UsuarioRepository_1 = require("../repository/UsuarioRepository");
+const router = (0, express_1.Router)();
+const usuarioRepository = new UsuarioRepository_1.UsuarioRepository();
+const createUsuarioUseCase = new create_1.CreateUsuarioUseCase(usuarioRepository);
+const createUsuarioController = new create_1.CreateUsuarioController(createUsuarioUseCase);
+const getAllUsuarioUseCase = new getAll_1.GetAllUsuarioUseCase(usuarioRepository);
+const getAllUsuarioController = new getAll_1.GetAllUsuarioController(getAllUsuarioUseCase);
+const getByIdUsuarioUseCase = new getById_1.GetByIdUsuarioUseCase(usuarioRepository);
+const getByIdUsuarioController = new getById_1.GetByIdUsuarioController(getByIdUsuarioUseCase);
+const updateUsuarioUseCase = new update_1.UpdateUsuarioUseCase(usuarioRepository);
+const updateUsuarioController = new update_1.UpdateUsuarioController(updateUsuarioUseCase);
+const deactivateUsuarioUseCase = new deactivate_1.DeactivateUsuarioUseCase(usuarioRepository);
+const deactivateUsuarioController = new deactivate_1.DeactivateUsuarioController(deactivateUsuarioUseCase);
+router.post("/", createUsuarioController.handle.bind(createUsuarioController));
+router.get("/", getAllUsuarioController.handle.bind(getAllUsuarioController));
+router.get("/:id", getByIdUsuarioController.handle.bind(getByIdUsuarioController));
+router.put("/:id", updateUsuarioController.handle.bind(updateUsuarioController));
+router.patch("/:id/desativar", deactivateUsuarioController.handle.bind(deactivateUsuarioController));
+exports.default = router;
+//# sourceMappingURL=usuarioRoutes.js.map

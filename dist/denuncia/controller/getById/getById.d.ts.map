@@ -1,0 +1,1 @@
+{"version":3,"file":"getById.d.ts","sourceRoot":"","sources":["../../../../src/denuncia/controller/getById/getById.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AACjD,OAAO,EAAE,sBAAsB,EAAE,MAAM,WAAW,CAAC;AAEnD,qBAAa,yBAAyB;IAEtB,OAAO,CAAC,QAAQ,CAAC,OAAO;gBAAP,OAAO,EAAE,sBAAsB;IAE5D,MAAM,GAAU,KAAK,OAAO,EAAE,KAAK,QAAQ,mBAUzC;CACL"}

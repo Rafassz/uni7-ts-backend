@@ -2,11 +2,12 @@
 
 API REST completa para gerenciamento de usuários, denúncias e avisos com sistema de soft delete (exclusão lógica).
 
+**🏗️ Arquitetura:** Desenvolvida seguindo os **princípios SOLID** com **arquitetura modular por domínio** - cada entidade possui seu próprio módulo completo e independente.
+
 ## 📖 Documentação Rápida
 
 - **[START.md](START.md)** → Guia de instalação e configuração passo a passo
 - **[TESTES.md](TESTES.md)** → Exemplos de requisições para testar todos os endpoints
-- **[INSTALACAO.md](INSTALACAO.md)** → Guia detalhado de instalação alternativa
 
 ## ⚡ Início Rápido
 
@@ -230,6 +231,37 @@ PATCH /avisos/:id/desativar
 - **SQL Server** - Banco de dados
 - **CORS** - Habilitado para requisições cross-origin
 
+## 🏗️ Arquitetura SOLID
+
+Este projeto segue os **princípios SOLID** com uma arquitetura em camadas:
+
+```
+📦 Camadas da Aplicação
+│
+├── 🎨 Controllers (Presentation)
+│   └── Responsabilidade: Lidar com requisições HTTP
+│
+├── 💼 Services (Business Logic)
+│   └── Responsabilidade: Regras de negócio e validações
+│
+├── 🗄️ Repositories (Data Access)
+│   └── Responsabilidade: Acesso ao banco de dados
+│
+├── 📋 Interfaces (Contracts)
+│   └── Responsabilidade: Contratos e abstrações
+│
+└── 📦 Types/DTOs (Data Transfer Objects)
+    └── Responsabilidade: Definição de estruturas de dados
+```
+
+**Benefícios:**
+- ✅ Código mais testável e manutenível
+- ✅ Separação clara de responsabilidades
+- ✅ Facilita extensão sem modificação
+- ✅ Dependency Injection implementada
+
+**Documentação completa:** Veja [SOLID.md](SOLID.md) e [DIAGRAMAS.md](DIAGRAMAS.md)
+
 ## 📁 Estrutura do Projeto
 
 ```
@@ -238,10 +270,26 @@ uni7-ts/
 │   ├── schema.prisma          # Schema do banco de dados
 │   └── migrations/            # Histórico de migrations
 ├── src/
-│   ├── controller/
+│   ├── controller/            # 🎨 Camada de apresentação (HTTP)
 │   │   ├── userController.ts
 │   │   ├── denunciaController.ts
 │   │   └── avisoController.ts
+│   ├── services/              # 💼 Camada de negócio
+│   │   ├── UsuarioService.ts
+│   │   ├── DenunciaService.ts
+│   │   └── AvisoService.ts
+│   ├── repositories/          # 🗄️ Camada de dados
+│   │   ├── UsuarioRepository.ts
+│   │   ├── DenunciaRepository.ts
+│   │   └── AvisoRepository.ts
+│   ├── interfaces/            # 📋 Contratos e abstrações
+│   │   ├── IRepository.ts
+│   │   ├── IService.ts
+│   │   └── ...
+│   ├── types/                 # 📦 DTOs
+│   │   ├── usuario.types.ts
+│   │   ├── denuncia.types.ts
+│   │   └── aviso.types.ts
 │   ├── database/
 │   │   └── prismaClient.ts
 │   ├── routes/

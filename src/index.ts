@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
-import userRoutes from "./routes/userRoutes";
-import denunciaRoutes from "./routes/denunciaRoutes";
-import avisoRoutes from "./routes/avisoRoutes";
+import userRoutes from "./usuario/routes/usuarioRoutes";
+import denunciaRoutes from "./denuncia/routes/denunciaRoutes";
+import avisoRoutes from "./aviso/routes/avisoRoutes";
 import cors from 'cors';
 
 const app = express();
@@ -10,10 +10,9 @@ app.use(cors());
 
 app.use(express.json());
 
-// Rotas da API
-app.use("/usuarios", userRoutes);
-app.use("/denuncias", denunciaRoutes);
-app.use("/avisos", avisoRoutes);
+app.use("/uni7/usuarios", userRoutes);
+app.use("/uni7/denuncias", denunciaRoutes);
+app.use("/uni7/avisos", avisoRoutes);
 
 app.get("/", (req: Request, res: Response) => {
     res.send("API rodando - Sistema de Denúncias e Avisos");
