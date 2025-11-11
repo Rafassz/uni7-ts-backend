@@ -1,0 +1,47 @@
+### Testar rota de usuários
+GET http://localhost:3000/uni7/usuarios HTTP/1.1
+
+###
+
+### Testar rota de denúncias
+GET http://localhost:3000/uni7/denuncias HTTP/1.1
+
+###
+
+### Testar rota de avisos
+GET http://localhost:3000/uni7/avisos HTTP/1.1
+
+###
+
+### Criar um usuário de teste
+POST http://localhost:3000/uni7/usuarios HTTP/1.1
+Content-Type: application/json
+
+{
+  "NomeUsuario": "TesteUsuario",
+  "Senha": "senha123"
+}
+
+###
+
+### Criar uma denúncia de teste
+POST http://localhost:3000/uni7/denuncias HTTP/1.1
+Content-Type: application/json
+
+{
+  "IdUsuario": 1,
+  "Nome": "Denúncia Teste",
+  "Descricao": "Descrição da denúncia de teste"
+}
+
+###
+
+### Criar um aviso de teste
+POST http://localhost:3000/uni7/avisos HTTP/1.1
+Content-Type: application/json
+
+{
+  "IdUsuario": 1,
+  "Nome": "Aviso Teste",
+  "Descricao": "Descrição do aviso de teste"
+}
