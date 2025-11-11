@@ -8,6 +8,8 @@ API REST completa para gerenciamento de usuários, denúncias e avisos com siste
 
 - **[START.md](START.md)** → Guia de instalação e configuração passo a passo
 - **[TESTES.md](TESTES.md)** → Exemplos de requisições para testar todos os endpoints
+- **[SWAGGER.md](SWAGGER.md)** → Documentação sobre a interface Swagger da API
+- **[Swagger UI](http://localhost:3000/api-docs)** → Documentação interativa (após iniciar o servidor)
 
 ## ⚡ Início Rápido
 
@@ -31,6 +33,8 @@ npm run dev
 ```
 
 Acesse: `http://localhost:3000`
+
+**Documentação Swagger:** `http://localhost:3000/api-docs`
 
 ## 📋 Estrutura do Banco de Dados
 
@@ -237,6 +241,7 @@ PATCH /uni7/avisos/:id/desativar
 - **Prisma** - ORM para banco de dados
 - **SQL Server** - Banco de dados
 - **CORS** - Habilitado para requisições cross-origin
+- **Swagger** - Documentação interativa da API (OpenAPI 3.0)
 
 ## 🏗️ Arquitetura SOLID com Operações
 
