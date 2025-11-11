@@ -2,7 +2,7 @@
 
 API REST completa para gerenciamento de usuários, denúncias e avisos com sistema de soft delete (exclusão lógica).
 
-**🏗️ Arquitetura:** Desenvolvida seguindo os **princípios SOLID** com **arquitetura modular por domínio** - cada entidade possui seu próprio módulo completo e independente.
+**🏗️ Arquitetura:** Desenvolvida seguindo os **princípios SOLID** com **arquitetura modular baseada em operações** - cada entidade possui seus próprios módulos organizados por funcionalidade (create, update, getAll, getById, deactivate).
 
 ## 📖 Documentação Rápida
 
@@ -19,12 +19,14 @@ npm install
 # DATABASE_URL="sqlserver://localhost:1433;database=UniDB;user=sa;password=SUA_SENHA;..."
 
 # 3. Executar o script prisma/manual_migration.sql no SQL Server
-# OU rodar: npx prisma migrate dev
 
 # 4. Gerar cliente Prisma
 npx prisma generate
 
-# 5. Iniciar servidor
+# 5. Compilar TypeScript
+npm run build
+
+# 6. Iniciar servidor
 npm run dev
 ```
 
@@ -36,27 +38,29 @@ Acesse: `http://localhost:3000`
 
 #### 1. Usuarios
 - `IdUsuario` (INT, PK, Auto-increment)
-- `Ativa` (INT, default: 1)
-- `NomeUsuario` (STRING)
-- `Senha` (STRING)
+- `NomeUsuario` (VARCHAR(255))
+- `Senha` (VARCHAR(255))
+- `Ativa` (BIT, default: 1)
+- `Inclusao` (DATETIME2, auto)
+- `Atualizacao` (DATETIME2, auto)
 
 #### 2. Denuncias
 - `IdDenuncia` (INT, PK, Auto-increment)
 - `IdUsuario` (INT, FK → Usuarios)
-- `Nome` (STRING)
+- `Nome` (VARCHAR(255))
 - `Descricao` (TEXT)
-- `Ativa` (INT, default: 1)
-- `Inclusao` (DATETIME, auto)
-- `Atualizacao` (DATETIME, auto)
+- `Ativa` (BIT, default: 1)
+- `Inclusao` (DATETIME2, auto)
+- `Atualizacao` (DATETIME2, auto)
 
 #### 3. Avisos
 - `IdAviso` (INT, PK, Auto-increment)
 - `IdUsuario` (INT, FK → Usuarios)
-- `Nome` (STRING)
+- `Nome` (VARCHAR(255))
 - `Descricao` (TEXT)
-- `Ativa` (INT, default: 1)
-- `Inclusao` (DATETIME, auto)
-- `Atualizacao` (DATETIME, auto)
+- `Ativa` (BIT, default: 1)
+- `Inclusao` (DATETIME2, auto)
+- `Atualizacao` (DATETIME2, auto)
 
 ## 🚀 Configuração e Instalação
 
@@ -91,11 +95,13 @@ npm run dev
 
 ## 📚 Endpoints da API
 
-### 👤 Usuários (`/usuarios`)
+**Base URL:** `http://localhost:3000/uni7`
+
+### 👤 Usuários (`/uni7/usuarios`)
 
 #### Create - Criar usuário
 ```http
-POST /usuarios
+POST /uni7/usuarios
 Content-Type: application/json
 
 {
@@ -106,17 +112,17 @@ Content-Type: application/json
 
 #### GetAll - Listar usuários ativos
 ```http
-GET /usuarios
+GET /uni7/usuarios
 ```
 
 #### GetById - Buscar usuário específico
 ```http
-GET /usuarios/:id
+GET /uni7/usuarios/:id
 ```
 
 #### Update - Atualizar usuário
 ```http
-PUT /usuarios/:id
+PUT /uni7/usuarios/:id
 Content-Type: application/json
 
 {
@@ -125,18 +131,18 @@ Content-Type: application/json
 }
 ```
 
-#### UpdateAtiva - Desativar usuário (soft delete)
+#### Deactivate - Desativar usuário (soft delete)
 ```http
-PATCH /usuarios/:id/desativar
+PATCH /uni7/usuarios/:id/desativar
 ```
 
 ---
 
-### 📢 Denúncias (`/denuncias`)
+### 📢 Denúncias (`/uni7/denuncias`)
 
 #### Create - Criar denúncia
 ```http
-POST /denuncias
+POST /uni7/denuncias
 Content-Type: application/json
 
 {
@@ -148,17 +154,17 @@ Content-Type: application/json
 
 #### GetAll - Listar denúncias ativas
 ```http
-GET /denuncias
+GET /uni7/denuncias
 ```
 
 #### GetById - Buscar denúncia específica
 ```http
-GET /denuncias/:id
+GET /uni7/denuncias/:id
 ```
 
 #### Update - Atualizar denúncia
 ```http
-PUT /denuncias/:id
+PUT /uni7/denuncias/:id
 Content-Type: application/json
 
 {
@@ -167,18 +173,18 @@ Content-Type: application/json
 }
 ```
 
-#### UpdateAtiva - Desativar denúncia (soft delete)
+#### Deactivate - Desativar denúncia (soft delete)
 ```http
-PATCH /denuncias/:id/desativar
+PATCH /uni7/denuncias/:id/desativar
 ```
 
 ---
 
-### 📣 Avisos (`/avisos`)
+### 📣 Avisos (`/uni7/avisos`)
 
 #### Create - Criar aviso
 ```http
-POST /avisos
+POST /uni7/avisos
 Content-Type: application/json
 
 {
@@ -190,17 +196,17 @@ Content-Type: application/json
 
 #### GetAll - Listar avisos ativos
 ```http
-GET /avisos
+GET /uni7/avisos
 ```
 
 #### GetById - Buscar aviso específico
 ```http
-GET /avisos/:id
+GET /uni7/avisos/:id
 ```
 
 #### Update - Atualizar aviso
 ```http
-PUT /avisos/:id
+PUT /uni7/avisos/:id
 Content-Type: application/json
 
 {
@@ -209,19 +215,20 @@ Content-Type: application/json
 }
 ```
 
-#### UpdateAtiva - Desativar aviso (soft delete)
+#### Deactivate - Desativar aviso (soft delete)
 ```http
-PATCH /avisos/:id/desativar
+PATCH /uni7/avisos/:id/desativar
 ```
 
 ## 🔒 Regras de Negócio
 
 1. **Soft Delete**: Nenhum registro é deletado fisicamente do banco de dados
-2. **Campo Ativa**: Usado para marcar registros como ativos (1) ou inativos (0)
+2. **Campo Ativa**: Tipo BIT, usado para marcar registros como ativos (1) ou inativos (0)
 3. **Filtro de Listagem**: GetAll retorna apenas registros com `Ativa = 1`
-4. **Relacionamentos**: Denúncias e Avisos estão relacionados com Usuários
+4. **Relacionamentos**: Denúncias e Avisos estão relacionados com Usuários via FK
 5. **Validação**: Ao criar denúncia ou aviso, verifica-se se o usuário existe e está ativo
 6. **Timestamps**: Inclusao e Atualizacao são gerenciados automaticamente pelo Prisma
+7. **Todas as tabelas** possuem os campos Ativa, Inclusao e Atualizacao
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -231,36 +238,45 @@ PATCH /avisos/:id/desativar
 - **SQL Server** - Banco de dados
 - **CORS** - Habilitado para requisições cross-origin
 
-## 🏗️ Arquitetura SOLID
+## 🏗️ Arquitetura SOLID com Operações
 
-Este projeto segue os **princípios SOLID** com uma arquitetura em camadas:
+Este projeto segue os **princípios SOLID** com uma arquitetura baseada em **operações** organizadas por domínio:
 
 ```
-📦 Camadas da Aplicação
+📦 Estrutura por Domínio e Operação
 │
-├── 🎨 Controllers (Presentation)
-│   └── Responsabilidade: Lidar com requisições HTTP
+├── 📁 usuario/
+│   ├── 📁 controller/
+│   │   ├── 📁 create/
+│   │   │   ├── create.ts (Controller)
+│   │   │   ├── useCase.ts (Business Logic)
+│   │   │   └── DTO/ (Request/Response)
+│   │   ├── 📁 update/
+│   │   ├── 📁 getAll/
+│   │   ├── 📁 getById/
+│   │   └── 📁 deactivate/
+│   ├── � repository/
+│   ├── 📁 interfaces/
+│   ├── 📁 model/
+│   └── 📁 routes/
 │
-├── 💼 Services (Business Logic)
-│   └── Responsabilidade: Regras de negócio e validações
-│
-├── 🗄️ Repositories (Data Access)
-│   └── Responsabilidade: Acesso ao banco de dados
-│
-├── 📋 Interfaces (Contracts)
-│   └── Responsabilidade: Contratos e abstrações
-│
-└── 📦 Types/DTOs (Data Transfer Objects)
-    └── Responsabilidade: Definição de estruturas de dados
+├── 📁 denuncia/ (mesma estrutura)
+└── 📁 aviso/ (mesma estrutura)
 ```
+
+**Camadas:**
+- 🎨 **Controller** - Recebe requisições HTTP e chama o UseCase
+- 💼 **UseCase** - Contém a lógica de negócio específica da operação
+- 🗄️ **Repository** - Acesso ao banco de dados
+- 📋 **Interfaces** - Contratos para Repository e Service
+- 📦 **DTO** - Objetos de transferência de dados (IRequest/IResponse)
 
 **Benefícios:**
-- ✅ Código mais testável e manutenível
+- ✅ Código modular e altamente organizado
+- ✅ Cada operação é independente e testável
 - ✅ Separação clara de responsabilidades
-- ✅ Facilita extensão sem modificação
-- ✅ Dependency Injection implementada
-
-**Documentação completa:** Veja [SOLID.md](SOLID.md) e [DIAGRAMAS.md](DIAGRAMAS.md)
+- ✅ Fácil manutenção e extensão
+- ✅ UseCases co-localizados com seus controllers
 
 ## 📁 Estrutura do Projeto
 
@@ -268,39 +284,42 @@ Este projeto segue os **princípios SOLID** com uma arquitetura em camadas:
 uni7-ts/
 ├── prisma/
 │   ├── schema.prisma          # Schema do banco de dados
-│   └── migrations/            # Histórico de migrations
+│   └── manual_migration.sql   # Script SQL para criação do banco
 ├── src/
-│   ├── controller/            # 🎨 Camada de apresentação (HTTP)
-│   │   ├── userController.ts
-│   │   ├── denunciaController.ts
-│   │   └── avisoController.ts
-│   ├── services/              # 💼 Camada de negócio
-│   │   ├── UsuarioService.ts
-│   │   ├── DenunciaService.ts
-│   │   └── AvisoService.ts
-│   ├── repositories/          # 🗄️ Camada de dados
-│   │   ├── UsuarioRepository.ts
-│   │   ├── DenunciaRepository.ts
-│   │   └── AvisoRepository.ts
-│   ├── interfaces/            # 📋 Contratos e abstrações
-│   │   ├── IRepository.ts
-│   │   ├── IService.ts
-│   │   └── ...
-│   ├── types/                 # 📦 DTOs
-│   │   ├── usuario.types.ts
-│   │   ├── denuncia.types.ts
-│   │   └── aviso.types.ts
+│   ├── usuario/               # 📦 Módulo Usuario
+│   │   ├── controller/
+│   │   │   ├── create/
+│   │   │   │   ├── create.ts           # CreateUsuarioController
+│   │   │   │   ├── useCase.ts          # CreateUsuarioUseCase
+│   │   │   │   ├── index.ts            # Exports
+│   │   │   │   └── DTO/
+│   │   │   │       ├── IRequest.ts     # Interface de entrada
+│   │   │   │       └── IResponse.ts    # Interface de saída
+│   │   │   ├── update/                 # Mesma estrutura
+│   │   │   ├── getAll/
+│   │   │   ├── getById/
+│   │   │   └── deactivate/
+│   │   ├── repository/
+│   │   │   └── UsuarioRepository.ts
+│   │   ├── interfaces/
+│   │   │   └── IUsuarioRepository.ts
+│   │   ├── model/
+│   │   │   └── usuario.ts
+│   │   └── routes/
+│   │       └── usuarioRoutes.ts
+│   ├── denuncia/              # 📦 Módulo Denuncia (mesma estrutura)
+│   ├── aviso/                 # 📦 Módulo Aviso (mesma estrutura)
 │   ├── database/
 │   │   └── prismaClient.ts
-│   ├── routes/
-│   │   ├── userRoutes.ts
-│   │   ├── denunciaRoutes.ts
-│   │   └── avisoRoutes.ts
-│   └── index.ts               # Arquivo principal
-├── .env                       # Variáveis de ambiente (não commitado)
-├── .env.example               # Exemplo de configuração
+│   └── index.ts               # Servidor principal
+├── dist/                      # Código compilado
+├── .env                       # Variáveis de ambiente
+├── .gitignore
 ├── package.json
-└── tsconfig.json
+├── tsconfig.json
+├── README.md
+├── START.md
+└── TESTES.md
 ```
 
 ## 📝 Exemplos de Uso
@@ -309,12 +328,12 @@ uni7-ts/
 
 ```bash
 # 1. Criar usuário
-curl -X POST http://localhost:3000/usuarios \
+curl -X POST http://localhost:3000/uni7/usuarios \
   -H "Content-Type: application/json" \
   -d '{"NomeUsuario":"Maria","Senha":"senha123"}'
 
 # 2. Criar denúncia
-curl -X POST http://localhost:3000/denuncias \
+curl -X POST http://localhost:3000/uni7/denuncias \
   -H "Content-Type: application/json" \
   -d '{"IdUsuario":1,"Nome":"Bug crítico","Descricao":"Sistema travando"}'
 ```
@@ -323,26 +342,39 @@ curl -X POST http://localhost:3000/denuncias \
 
 ```bash
 # Listar todas as denúncias ativas
-curl http://localhost:3000/denuncias
+curl http://localhost:3000/uni7/denuncias
 
 # Desativar denúncia
-curl -X PATCH http://localhost:3000/denuncias/1/desativar
+curl -X PATCH http://localhost:3000/uni7/denuncias/1/desativar
 ```
 
-## 🔍 Comandos Úteis do Prisma
+## 🔍 Comandos Úteis
 
 ```bash
 # Visualizar banco de dados no Prisma Studio
 npx prisma studio
 
-# Resetar banco de dados (CUIDADO: apaga todos os dados)
-npx prisma migrate reset
+# Gerar cliente Prisma após alterações no schema
+npx prisma generate
 
-# Ver status das migrations
-npx prisma migrate status
+# Compilar TypeScript
+npm run build
 
-# Aplicar migrations em produção
-npx prisma migrate deploy
+# Iniciar servidor de desenvolvimento
+npm run dev
+
+# Verificar erros de TypeScript
+npx tsc --noEmit
+```
+
+## 📦 Scripts Disponíveis
+
+```json
+{
+  "dev": "tsx watch src/index.ts",
+  "build": "tsc",
+  "start": "node dist/index.js"
+}
 ```
 
 ## 📞 Suporte

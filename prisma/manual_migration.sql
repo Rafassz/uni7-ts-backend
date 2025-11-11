@@ -36,9 +36,11 @@ IF OBJECT_ID('dbo.Usuarios', 'U') IS NULL
 BEGIN
     CREATE TABLE [dbo].[Usuarios] (
         [IdUsuario] INT NOT NULL IDENTITY(1,1),
+        [NomeUsuario] VARCHAR(255) NOT NULL,
+        [Senha] VARCHAR(255) NOT NULL,
         [Ativa] BIT NOT NULL DEFAULT 1,
-        [NomeUsuario] NVARCHAR(1000) NOT NULL,
-        [Senha] NVARCHAR(1000) NOT NULL,
+        [Inclusao] DATETIME2 NOT NULL DEFAULT GETDATE(),
+        [Atualizacao] DATETIME2 NOT NULL DEFAULT GETDATE(),
         CONSTRAINT [Usuarios_pkey] PRIMARY KEY CLUSTERED ([IdUsuario])
     );
     PRINT '✓ Tabela Usuarios criada!';
@@ -46,6 +48,19 @@ END
 ELSE
 BEGIN
     PRINT '✓ Tabela Usuarios já existe.';
+    
+    -- Adicionar colunas se não existirem
+    IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('dbo.Usuarios') AND name = 'Inclusao')
+    BEGIN
+        ALTER TABLE [dbo].[Usuarios] ADD [Inclusao] DATETIME2 NOT NULL DEFAULT GETDATE();
+        PRINT '✓ Coluna Inclusao adicionada à tabela Usuarios!';
+    END
+    
+    IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('dbo.Usuarios') AND name = 'Atualizacao')
+    BEGIN
+        ALTER TABLE [dbo].[Usuarios] ADD [Atualizacao] DATETIME2 NOT NULL DEFAULT GETDATE();
+        PRINT '✓ Coluna Atualizacao adicionada à tabela Usuarios!';
+    END
 END
 GO
 
@@ -55,8 +70,8 @@ BEGIN
     CREATE TABLE [dbo].[Denuncias] (
         [IdDenuncia] INT NOT NULL IDENTITY(1,1),
         [IdUsuario] INT NOT NULL,
-        [Nome] NVARCHAR(1000) NOT NULL,
-        [Descricao] NVARCHAR(MAX) NOT NULL,
+        [Nome] VARCHAR(255) NOT NULL,
+        [Descricao] TEXT NOT NULL,
         [Ativa] BIT NOT NULL DEFAULT 1,
         [Inclusao] DATETIME2 NOT NULL DEFAULT GETDATE(),
         [Atualizacao] DATETIME2 NOT NULL DEFAULT GETDATE(),
@@ -80,8 +95,8 @@ BEGIN
     CREATE TABLE [dbo].[Avisos] (
         [IdAviso] INT NOT NULL IDENTITY(1,1),
         [IdUsuario] INT NOT NULL,
-        [Nome] NVARCHAR(1000) NOT NULL,
-        [Descricao] NVARCHAR(MAX) NOT NULL,
+        [Nome] VARCHAR(255) NOT NULL,
+        [Descricao] TEXT NOT NULL,
         [Ativa] BIT NOT NULL DEFAULT 1,
         [Inclusao] DATETIME2 NOT NULL DEFAULT GETDATE(),
         [Atualizacao] DATETIME2 NOT NULL DEFAULT GETDATE(),

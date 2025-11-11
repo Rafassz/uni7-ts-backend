@@ -3,4 +3,6 @@ export interface Usuario {
     NomeUsuario: string;
     Senha: string;
     Ativa: boolean;
+    Inclusao: Date;
+    Atualizacao: Date;
 }

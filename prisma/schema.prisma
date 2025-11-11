@@ -15,9 +15,11 @@ datasource db {
 
 model Usuario {
   IdUsuario   Int         @id @default(autoincrement())
-  Ativa       Boolean     @default(true)
-  NomeUsuario String
-  Senha       String
+  NomeUsuario String      @db.VarChar(255)
+  Senha       String      @db.VarChar(255)
+  Ativa       Boolean     @default(true) @db.Bit
+  Inclusao    DateTime    @default(now())
+  Atualizacao DateTime    @updatedAt
   
   denuncias   Denuncia[]
   avisos      Aviso[]
@@ -28,9 +30,9 @@ model Usuario {
 model Denuncia {
   IdDenuncia  Int      @id @default(autoincrement())
   IdUsuario   Int
-  Nome        String
+  Nome        String   @db.VarChar(255)
   Descricao   String   @db.Text
-  Ativa       Boolean  @default(true)
+  Ativa       Boolean  @default(true) @db.Bit
   Inclusao    DateTime @default(now())
   Atualizacao DateTime @updatedAt
   
@@ -42,9 +44,9 @@ model Denuncia {
 model Aviso {
   IdAviso     Int      @id @default(autoincrement())
   IdUsuario   Int
-  Nome        String
+  Nome        String   @db.VarChar(255)
   Descricao   String   @db.Text
-  Ativa       Boolean  @default(true)
+  Ativa       Boolean  @default(true) @db.Bit
   Inclusao    DateTime @default(now())
   Atualizacao DateTime @updatedAt
   
