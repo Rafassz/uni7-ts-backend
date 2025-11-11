@@ -3,11 +3,12 @@ import type { IUsuarioRepository } from "../interfaces/IUsuarioRepository";
 import type { IRequest as CreateUsuarioDTO } from "../controller/create/DTO/IRequest";
 import type { IRequest as UpdateUsuarioDTO } from "../controller/update/DTO/IRequest";
 import type { IResponse as UsuarioResponseDTO } from "../controller/create/DTO/IResponse";
+import type { Usuario } from "../model/usuario";
 
 export class UsuarioRepository implements IUsuarioRepository {
     
     async create(data: CreateUsuarioDTO): Promise<UsuarioResponseDTO> {
-        const usuario = await prisma.usuario.create({
+        const usuario = await prisma.usuarios.create({
             data: {
                 NomeUsuario: data.NomeUsuario,
                 Senha: data.Senha
@@ -24,7 +25,7 @@ export class UsuarioRepository implements IUsuarioRepository {
     }
 
     async findAll(): Promise<UsuarioResponseDTO[]> {
-        const usuarios = await prisma.usuario.findMany({
+        const usuarios = await prisma.usuarios.findMany({
             where: { Ativa: true },
             select: {
                 IdUsuario: true,
@@ -39,7 +40,7 @@ export class UsuarioRepository implements IUsuarioRepository {
     }
 
     async findById(id: number): Promise<UsuarioResponseDTO | null> {
-        const usuario = await prisma.usuario.findUnique({
+        const usuario = await prisma.usuarios.findUnique({
             where: { IdUsuario: id },
             select: {
                 IdUsuario: true,
@@ -52,8 +53,18 @@ export class UsuarioRepository implements IUsuarioRepository {
         return usuario;
     }
 
+    async findByUsername(nomeUsuario: string): Promise<Usuario | null> {
+        const usuario = await prisma.usuarios.findFirst({
+            where: { 
+                NomeUsuario: nomeUsuario,
+                Ativa: true 
+            }
+        });
+        return usuario;
+    }
+
     async update(id: number, data: UpdateUsuarioDTO): Promise<UsuarioResponseDTO> {
-        const usuario = await prisma.usuario.update({
+        const usuario = await prisma.usuarios.update({
             where: { IdUsuario: id },
             data: {
                 ...(data.NomeUsuario && { NomeUsuario: data.NomeUsuario }),
@@ -71,7 +82,7 @@ export class UsuarioRepository implements IUsuarioRepository {
     }
 
     async deactivate(id: number): Promise<UsuarioResponseDTO> {
-        const usuario = await prisma.usuario.update({
+        const usuario = await prisma.usuarios.update({
             where: { IdUsuario: id },
             data: { Ativa: false },
             select: {

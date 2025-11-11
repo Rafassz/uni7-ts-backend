@@ -4,6 +4,7 @@ import { GetAllUsuarioController, GetAllUsuarioUseCase } from "../controller/get
 import { GetByIdUsuarioController, GetByIdUsuarioUseCase } from "../controller/getById";
 import { UpdateUsuarioController, UpdateUsuarioUseCase } from "../controller/update";
 import { DeactivateUsuarioController, DeactivateUsuarioUseCase } from "../controller/deactivate";
+import { LoginUsuarioController, LoginUsuarioUseCase } from "../controller/login";
 import { UsuarioRepository } from "../repository/UsuarioRepository";
 
 const router = Router();
@@ -24,6 +25,69 @@ const updateUsuarioController = new UpdateUsuarioController(updateUsuarioUseCase
 
 const deactivateUsuarioUseCase = new DeactivateUsuarioUseCase(usuarioRepository);
 const deactivateUsuarioController = new DeactivateUsuarioController(deactivateUsuarioUseCase);
+
+const loginUsuarioUseCase = new LoginUsuarioUseCase(usuarioRepository);
+const loginUsuarioController = new LoginUsuarioController(loginUsuarioUseCase);
+
+/**
+ * @swagger
+ * /uni7/usuarios/login:
+ *   post:
+ *     tags: [Usuarios]
+ *     summary: Login de usuário
+ *     description: Autentica um usuário no sistema
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - NomeUsuario
+ *               - Senha
+ *             properties:
+ *               NomeUsuario:
+ *                 type: string
+ *                 example: "joao"
+ *               Senha:
+ *                 type: string
+ *                 example: "senha123"
+ *     responses:
+ *       200:
+ *         description: Login realizado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 IdUsuario:
+ *                   type: integer
+ *                 NomeUsuario:
+ *                   type: string
+ *                 Email:
+ *                   type: string
+ *                 mensagem:
+ *                   type: string
+ *       401:
+ *         description: Credenciais inválidas
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 erro:
+ *                   type: string
+ *       400:
+ *         description: Dados inválidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 erro:
+ *                   type: string
+ */
+router.post("/login", loginUsuarioController.handle.bind(loginUsuarioController));
 
 /**
  * @swagger
