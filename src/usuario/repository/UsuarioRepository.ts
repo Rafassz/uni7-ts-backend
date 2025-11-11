@@ -15,7 +15,9 @@ export class UsuarioRepository implements IUsuarioRepository {
             select: {
                 IdUsuario: true,
                 NomeUsuario: true,
-                Ativa: true
+                Ativa: true,
+                Inclusao: true,
+                Atualizacao: true
             }
         });
         return usuario;
@@ -27,7 +29,9 @@ export class UsuarioRepository implements IUsuarioRepository {
             select: {
                 IdUsuario: true,
                 NomeUsuario: true,
-                Ativa: true
+                Ativa: true,
+                Inclusao: true,
+                Atualizacao: true
             },
             orderBy: { IdUsuario: 'desc' }
         });
@@ -40,7 +44,9 @@ export class UsuarioRepository implements IUsuarioRepository {
             select: {
                 IdUsuario: true,
                 NomeUsuario: true,
-                Ativa: true
+                Ativa: true,
+                Inclusao: true,
+                Atualizacao: true
             }
         });
         return usuario;
@@ -56,7 +62,9 @@ export class UsuarioRepository implements IUsuarioRepository {
             select: {
                 IdUsuario: true,
                 NomeUsuario: true,
-                Ativa: true
+                Ativa: true,
+                Inclusao: true,
+                Atualizacao: true
             }
         });
         return usuario;
@@ -69,7 +77,9 @@ export class UsuarioRepository implements IUsuarioRepository {
             select: {
                 IdUsuario: true,
                 NomeUsuario: true,
-                Ativa: true
+                Ativa: true,
+                Inclusao: true,
+                Atualizacao: true
             }
         });
         return usuario;
