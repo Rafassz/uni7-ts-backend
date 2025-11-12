@@ -18,5 +18,5 @@ export class CreateUsuarioController {
             const errorMessage = error instanceof Error ? error.message : "Erro ao criar usuário";
             res.status(400).json({ erro: errorMessage });
         }
-    };
+    };  
 }
