@@ -6,6 +6,8 @@ import { UpdateAvisoController, UpdateAvisoUseCase } from "../controller/update"
 import { DeactivateAvisoController, DeactivateAvisoUseCase } from "../controller/deactivate";
 import { AvisoRepository } from "../repository/AvisoRepository";
 import { UsuarioRepository } from "../../usuario/repository/UsuarioRepository";
+import { authMiddleware } from "../../middlewares/authMiddleware";
+import { canCreateAviso } from "../../middlewares/roleMiddleware";
 
 const router = Router();
 
@@ -59,7 +61,7 @@ const deactivateAvisoController = new DeactivateAvisoController(deactivateAvisoU
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post("/", createAvisoController.handle.bind(createAvisoController));
+router.post("/", authMiddleware, canCreateAviso, createAvisoController.handle.bind(createAvisoController));
 
 /**
  * @swagger
@@ -161,7 +163,7 @@ router.get("/:id", getByIdAvisoController.handle.bind(getByIdAvisoController));
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put("/:id", updateAvisoController.handle.bind(updateAvisoController));
+router.put("/:id", authMiddleware, canCreateAviso, updateAvisoController.handle.bind(updateAvisoController));
 
 /**
  * @swagger
@@ -196,7 +198,7 @@ router.put("/:id", updateAvisoController.handle.bind(updateAvisoController));
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.patch("/:id/desativar", deactivateAvisoController.handle.bind(deactivateAvisoController));
+router.patch("/:id/desativar", authMiddleware, canCreateAviso, deactivateAvisoController.handle.bind(deactivateAvisoController));
 
 export default router;
 

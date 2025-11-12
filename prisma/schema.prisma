@@ -8,29 +8,43 @@ datasource db {
 }
 
 model Usuario {
-  IdUsuario   Int        @id @default(autoincrement())
-  NomeUsuario String     @db.VarChar(255)
-  Senha       String     @db.VarChar(255)
-  Ativa       Boolean    @default(true)
-  Inclusao    DateTime   @default(now())
-  Atualizacao DateTime   @updatedAt
-  avisos      Aviso[]
-  denuncias   Denuncia[]
+  IdUsuario      Int             @id @default(autoincrement())
+  NomeUsuario    String          @db.VarChar(255)
+  Senha          String          @db.VarChar(255)
+  Role           String          @default("Morador") @db.VarChar(50)
+  Email          String?         @db.VarChar(255)
+  Apartamento    String?         @db.VarChar(50)
+  Bloco          String?         @db.VarChar(10)
+  Ativa          Boolean         @default(true)
+  Inclusao       DateTime        @default(now())
+  Atualizacao    DateTime        @updatedAt
+  avisos         Aviso[]
+  denuncias      Denuncia[]
+  comentarios    Comentario[]
+  mensagensEnviadas Mensagem[]  @relation("MensagensEnviadas")
+  mensagensRecebidas Mensagem[] @relation("MensagensRecebidas")
+  notificacoes   Notificacao[]
+  reservas       Reserva[]
 
   @@map("Usuarios")
 }
 
 model Denuncia {
-  IdDenuncia  Int      @id @default(autoincrement())
+  IdDenuncia  Int          @id @default(autoincrement())
   IdUsuario   Int
-  Nome        String   @db.VarChar(255)
-  Descricao   String   @db.Text
-  Ativa       Boolean  @default(true)
-  Inclusao    DateTime @default(now())
-  Atualizacao DateTime @updatedAt
-  Status      String   @default("Aberta", map: "DF_Denuncias_Status") @db.NVarChar(50)
-  Prioridade  String   @default("Média", map: "DF_Denuncias_Prioridade") @db.NVarChar(50)
-  usuario     Usuario  @relation(fields: [IdUsuario], references: [IdUsuario])
+  IdCategoria Int?
+  Nome        String       @db.VarChar(255)
+  Descricao   String       @db.Text
+  Ativa       Boolean      @default(true)
+  Inclusao    DateTime     @default(now())
+  Atualizacao DateTime     @updatedAt
+  Status      String       @default("Aberta", map: "DF_Denuncias_Status") @db.NVarChar(50)
+  Prioridade  String       @default("Média", map: "DF_Denuncias_Prioridade") @db.NVarChar(50)
+  DataResolucao DateTime?
+  usuario     Usuario      @relation(fields: [IdUsuario], references: [IdUsuario])
+  categoria   Categoria?   @relation(fields: [IdCategoria], references: [IdCategoria])
+  comentarios Comentario[]
+  anexos      Anexo[]
 
   @@map("Denuncias")
 }
@@ -43,7 +57,112 @@ model Aviso {
   Ativa       Boolean  @default(true)
   Inclusao    DateTime @default(now())
   Atualizacao DateTime @updatedAt
+  DataEvento  DateTime?
   usuario     Usuario  @relation(fields: [IdUsuario], references: [IdUsuario])
+  anexos      Anexo[]
 
   @@map("Avisos")
+}
+
+model Categoria {
+  IdCategoria Int        @id @default(autoincrement())
+  Nome        String     @db.VarChar(100)
+  Descricao   String?    @db.VarChar(255)
+  Cor         String?    @db.VarChar(20)
+  Icone       String?    @db.VarChar(50)
+  Ativa       Boolean    @default(true)
+  Inclusao    DateTime   @default(now())
+  Atualizacao DateTime   @updatedAt
+  denuncias   Denuncia[]
+
+  @@map("Categorias")
+}
+
+model Comentario {
+  IdComentario Int      @id @default(autoincrement())
+  IdDenuncia   Int
+  IdUsuario    Int
+  Texto        String   @db.Text
+  Ativa        Boolean  @default(true)
+  Inclusao     DateTime @default(now())
+  Atualizacao  DateTime @updatedAt
+  denuncia     Denuncia @relation(fields: [IdDenuncia], references: [IdDenuncia], onDelete: NoAction, onUpdate: NoAction)
+  usuario      Usuario  @relation(fields: [IdUsuario], references: [IdUsuario], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("Comentarios")
+}
+
+model Anexo {
+  IdAnexo     Int       @id @default(autoincrement())
+  IdDenuncia  Int?
+  IdAviso     Int?
+  NomeArquivo String    @db.VarChar(255)
+  CaminhoArquivo String @db.VarChar(500)
+  TipoArquivo String    @db.VarChar(100)
+  Tamanho     Int
+  Ativa       Boolean   @default(true)
+  Inclusao    DateTime  @default(now())
+  denuncia    Denuncia? @relation(fields: [IdDenuncia], references: [IdDenuncia], onDelete: NoAction, onUpdate: NoAction)
+  aviso       Aviso?    @relation(fields: [IdAviso], references: [IdAviso], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("Anexos")
+}
+
+model Mensagem {
+  IdMensagem       Int      @id @default(autoincrement())
+  IdRemetente      Int
+  IdDestinatario   Int
+  Texto            String   @db.Text
+  Lida             Boolean  @default(false)
+  Ativa            Boolean  @default(true)
+  Inclusao         DateTime @default(now())
+  remetente        Usuario  @relation("MensagensEnviadas", fields: [IdRemetente], references: [IdUsuario], onDelete: NoAction, onUpdate: NoAction)
+  destinatario     Usuario  @relation("MensagensRecebidas", fields: [IdDestinatario], references: [IdUsuario], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("Mensagens")
+}
+
+model Notificacao {
+  IdNotificacao Int      @id @default(autoincrement())
+  IdUsuario     Int
+  Titulo        String   @db.VarChar(255)
+  Mensagem      String   @db.Text
+  Tipo          String   @db.VarChar(50)
+  Lida          Boolean  @default(false)
+  Link          String?  @db.VarChar(500)
+  Ativa         Boolean  @default(true)
+  Inclusao      DateTime @default(now())
+  usuario       Usuario  @relation(fields: [IdUsuario], references: [IdUsuario])
+
+  @@map("Notificacoes")
+}
+
+model Evento {
+  IdEvento    Int       @id @default(autoincrement())
+  Nome        String    @db.VarChar(255)
+  Descricao   String?   @db.Text
+  Local       String    @db.VarChar(255)
+  DataInicio  DateTime
+  DataFim     DateTime
+  Ativa       Boolean   @default(true)
+  Inclusao    DateTime  @default(now())
+  Atualizacao DateTime  @updatedAt
+  reservas    Reserva[]
+
+  @@map("Eventos")
+}
+
+model Reserva {
+  IdReserva   Int      @id @default(autoincrement())
+  IdUsuario   Int
+  IdEvento    Int
+  DataReserva DateTime
+  Status      String   @default("Pendente") @db.VarChar(50)
+  Ativa       Boolean  @default(true)
+  Inclusao    DateTime @default(now())
+  Atualizacao DateTime @updatedAt
+  usuario     Usuario  @relation(fields: [IdUsuario], references: [IdUsuario])
+  evento      Evento   @relation(fields: [IdEvento], references: [IdEvento])
+
+  @@map("Reservas")
 }

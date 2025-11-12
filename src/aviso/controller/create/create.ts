@@ -1,14 +1,27 @@
-import type { Request, Response } from "express";
+import type { Response } from "express";
 import { CreateAvisoUseCase } from "./useCase";
+import type { AuthRequest } from "../../../middlewares/authMiddleware";
 
 export class CreateAvisoController {
     
     constructor(private readonly useCase: CreateAvisoUseCase) {}
 
-    handle = async (req: Request, res: Response) => {
+    handle = async (req: AuthRequest, res: Response) => {
         try {
-            const { IdUsuario, Nome, Descricao } = req.body;
-            const aviso = await this.useCase.execute({ IdUsuario, Nome, Descricao });
+            const { Nome, Descricao, DataEvento } = req.body;
+            const IdUsuario = req.userId; // Pega do token JWT
+
+            if (!IdUsuario) {
+                return res.status(401).json({ erro: 'Usuário não autenticado' });
+            }
+
+            const aviso = await this.useCase.execute({ 
+                IdUsuario, 
+                Nome, 
+                Descricao,
+                DataEvento 
+            });
+            
             res.status(201).json({
                 mensagem: "Aviso criado com sucesso",
                 aviso

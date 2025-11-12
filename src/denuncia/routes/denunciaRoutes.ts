@@ -6,6 +6,8 @@ import { UpdateDenunciaController, UpdateDenunciaUseCase } from "../controller/u
 import { DeactivateDenunciaController, DeactivateDenunciaUseCase } from "../controller/deactivate";
 import { DenunciaRepository } from "../repository/DenunciaRepository";
 import { UsuarioRepository } from "../../usuario/repository/UsuarioRepository";
+import { authMiddleware } from "../../middlewares/authMiddleware";
+import { canModifyDenunciaStatus } from "../../middlewares/roleMiddleware";
 
 const router = Router();
 
@@ -59,7 +61,7 @@ const deactivateDenunciaController = new DeactivateDenunciaController(deactivate
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post("/", createDenunciaController.handle.bind(createDenunciaController));
+router.post("/", authMiddleware, createDenunciaController.handle.bind(createDenunciaController));
 
 /**
  * @swagger
@@ -161,7 +163,7 @@ router.get("/:id", getByIdDenunciaController.handle.bind(getByIdDenunciaControll
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put("/:id", updateDenunciaController.handle.bind(updateDenunciaController));
+router.put("/:id", authMiddleware, canModifyDenunciaStatus, updateDenunciaController.handle.bind(updateDenunciaController));
 
 /**
  * @swagger
@@ -196,7 +198,7 @@ router.put("/:id", updateDenunciaController.handle.bind(updateDenunciaController
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.patch("/:id/desativar", deactivateDenunciaController.handle.bind(deactivateDenunciaController));
+router.patch("/:id/desativar", authMiddleware, canModifyDenunciaStatus, deactivateDenunciaController.handle.bind(deactivateDenunciaController));
 
 export default router;
 

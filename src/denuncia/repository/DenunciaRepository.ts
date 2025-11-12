@@ -19,10 +19,18 @@ export class DenunciaRepository implements IDenunciaRepository {
                         IdUsuario: true,
                         NomeUsuario: true
                     }
+                },
+                categoria: {
+                    select: {
+                        IdCategoria: true,
+                        Nome: true,
+                        Cor: true,
+                        Icone: true
+                    }
                 }
             }
         });
-        return denuncia;
+        return denuncia as any;
     }
 
     async findAll(): Promise<DenunciaResponseDTO[]> {
@@ -34,11 +42,19 @@ export class DenunciaRepository implements IDenunciaRepository {
                         IdUsuario: true,
                         NomeUsuario: true
                     }
+                },
+                categoria: {
+                    select: {
+                        IdCategoria: true,
+                        Nome: true,
+                        Cor: true,
+                        Icone: true
+                    }
                 }
             },
             orderBy: { Inclusao: 'desc' }
         });
-        return denuncias;
+        return denuncias as any;
     }
 
     async findById(id: number): Promise<DenunciaResponseDTO | null> {
@@ -50,10 +66,18 @@ export class DenunciaRepository implements IDenunciaRepository {
                         IdUsuario: true,
                         NomeUsuario: true
                     }
+                },
+                categoria: {
+                    select: {
+                        IdCategoria: true,
+                        Nome: true,
+                        Cor: true,
+                        Icone: true
+                    }
                 }
             }
         });
-        return denuncia;
+        return denuncia as any;
     }
 
     async update(id: number, data: UpdateDenunciaDTO): Promise<DenunciaResponseDTO> {
@@ -69,10 +93,18 @@ export class DenunciaRepository implements IDenunciaRepository {
                         IdUsuario: true,
                         NomeUsuario: true
                     }
+                },
+                categoria: {
+                    select: {
+                        IdCategoria: true,
+                        Nome: true,
+                        Cor: true,
+                        Icone: true
+                    }
                 }
             }
         });
-        return denuncia;
+        return denuncia as any;
     }
 
     async deactivate(id: number): Promise<DenunciaResponseDTO> {
@@ -85,9 +117,17 @@ export class DenunciaRepository implements IDenunciaRepository {
                         IdUsuario: true,
                         NomeUsuario: true
                     }
+                },
+                categoria: {
+                    select: {
+                        IdCategoria: true,
+                        Nome: true,
+                        Cor: true,
+                        Icone: true
+                    }
                 }
             }
         });
-        return denuncia;
+        return denuncia as any;
     }
 }

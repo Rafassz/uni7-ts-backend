@@ -5,7 +5,10 @@ import { GetByIdUsuarioController, GetByIdUsuarioUseCase } from "../controller/g
 import { UpdateUsuarioController, UpdateUsuarioUseCase } from "../controller/update";
 import { DeactivateUsuarioController, DeactivateUsuarioUseCase } from "../controller/deactivate";
 import { LoginUsuarioController, LoginUsuarioUseCase } from "../controller/login";
+import { updateProfileController } from "../controller/updateProfile";
 import { UsuarioRepository } from "../repository/UsuarioRepository";
+import { authMiddleware } from "../../middlewares/authMiddleware";
+import { canManageUsers } from "../../middlewares/roleMiddleware";
 
 const router = Router();
 
@@ -91,6 +94,41 @@ router.post("/login", loginUsuarioController.handle.bind(loginUsuarioController)
 
 /**
  * @swagger
+ * /uni7/usuarios/perfil:
+ *   put:
+ *     tags: [Usuarios]
+ *     summary: Atualizar perfil próprio
+ *     description: Permite ao usuário autenticado atualizar seu próprio nome e senha
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               NomeUsuario:
+ *                 type: string
+ *                 description: Novo nome de usuário (opcional)
+ *               Senha:
+ *                 type: string
+ *                 description: Senha atual (obrigatório se for alterar senha)
+ *               NovaSenha:
+ *                 type: string
+ *                 description: Nova senha (opcional)
+ *     responses:
+ *       200:
+ *         description: Perfil atualizado com sucesso
+ *       400:
+ *         description: Erro de validação
+ *       401:
+ *         description: Não autenticado
+ */
+router.put("/perfil", authMiddleware, updateProfileController.handle.bind(updateProfileController));
+
+/**
+ * @swagger
  * /uni7/usuarios:
  *   post:
  *     tags: [Usuarios]
@@ -121,7 +159,7 @@ router.post("/login", loginUsuarioController.handle.bind(loginUsuarioController)
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post("/", createUsuarioController.handle.bind(createUsuarioController));
+router.post("/", authMiddleware, canManageUsers, createUsuarioController.handle.bind(createUsuarioController));
 
 /**
  * @swagger
@@ -146,7 +184,7 @@ router.post("/", createUsuarioController.handle.bind(createUsuarioController));
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get("/", getAllUsuarioController.handle.bind(getAllUsuarioController));
+router.get("/", authMiddleware, canManageUsers, getAllUsuarioController.handle.bind(getAllUsuarioController));
 
 /**
  * @swagger
@@ -223,7 +261,7 @@ router.get("/:id", getByIdUsuarioController.handle.bind(getByIdUsuarioController
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put("/:id", updateUsuarioController.handle.bind(updateUsuarioController));
+router.put("/:id", authMiddleware, canManageUsers, updateUsuarioController.handle.bind(updateUsuarioController));
 
 /**
  * @swagger
@@ -258,7 +296,7 @@ router.put("/:id", updateUsuarioController.handle.bind(updateUsuarioController))
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.patch("/:id/desativar", deactivateUsuarioController.handle.bind(deactivateUsuarioController));
+router.patch("/:id/desativar", authMiddleware, canManageUsers, deactivateUsuarioController.handle.bind(deactivateUsuarioController));
 
 export default router;
 

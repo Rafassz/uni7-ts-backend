@@ -18,6 +18,10 @@ export class UsuarioRepository implements IUsuarioRepository {
                 select: {
                     IdUsuario: true,
                     NomeUsuario: true,
+                    Role: true,
+                    Email: true,
+                    Apartamento: true,
+                    Bloco: true,
                     Ativa: true,
                     Inclusao: true,
                     Atualizacao: true
@@ -37,6 +41,10 @@ export class UsuarioRepository implements IUsuarioRepository {
             select: {
                 IdUsuario: true,
                 NomeUsuario: true,
+                Role: true,
+                Email: true,
+                Apartamento: true,
+                Bloco: true,
                 Ativa: true,
                 Inclusao: true,
                 Atualizacao: true
@@ -52,6 +60,10 @@ export class UsuarioRepository implements IUsuarioRepository {
             select: {
                 IdUsuario: true,
                 NomeUsuario: true,
+                Role: true,
+                Email: true,
+                Apartamento: true,
+                Bloco: true,
                 Ativa: true,
                 Inclusao: true,
                 Atualizacao: true
@@ -80,6 +92,10 @@ export class UsuarioRepository implements IUsuarioRepository {
             select: {
                 IdUsuario: true,
                 NomeUsuario: true,
+                Role: true,
+                Email: true,
+                Apartamento: true,
+                Bloco: true,
                 Ativa: true,
                 Inclusao: true,
                 Atualizacao: true
@@ -95,6 +111,10 @@ export class UsuarioRepository implements IUsuarioRepository {
             select: {
                 IdUsuario: true,
                 NomeUsuario: true,
+                Role: true,
+                Email: true,
+                Apartamento: true,
+                Bloco: true,
                 Ativa: true,
                 Inclusao: true,
                 Atualizacao: true

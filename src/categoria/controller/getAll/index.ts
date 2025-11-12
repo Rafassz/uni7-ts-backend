@@ -1,0 +1,1 @@
+export { GetAllCategoriasController } from './getAll';
