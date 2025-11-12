@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import userRoutes from "./usuario/routes/usuarioRoutes";
 import denunciaRoutes from "./denuncia/routes/denunciaRoutes";
 import avisoRoutes from "./aviso/routes/avisoRoutes";
+import { dashboardRoutes } from "./dashboard/routes/dashboardRoutes";
 import cors from 'cors';
 import { setupSwagger } from './swagger';
 
@@ -17,6 +18,7 @@ setupSwagger(app);
 app.use("/uni7/usuarios", userRoutes);
 app.use("/uni7/denuncias", denunciaRoutes);
 app.use("/uni7/avisos", avisoRoutes);
+app.use("/uni7/dashboard", dashboardRoutes);
 
 app.get("/", (req: Request, res: Response) => {
     res.send("API rodando - Sistema de Denúncias e Avisos");

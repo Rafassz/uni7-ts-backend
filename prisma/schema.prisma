@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,15 +8,14 @@ datasource db {
 }
 
 model Usuario {
-  IdUsuario   Int         @id @default(autoincrement())
-  NomeUsuario String      @db.VarChar(255)
-  Senha       String      @db.VarChar(255)
-  Ativa       Boolean     @default(true) @db.Bit
-  Inclusao    DateTime    @default(now())
-  Atualizacao DateTime    @updatedAt
-  
-  denuncias   Denuncia[]
+  IdUsuario   Int        @id @default(autoincrement())
+  NomeUsuario String     @db.VarChar(255)
+  Senha       String     @db.VarChar(255)
+  Ativa       Boolean    @default(true)
+  Inclusao    DateTime   @default(now())
+  Atualizacao DateTime   @updatedAt
   avisos      Aviso[]
+  denuncias   Denuncia[]
 
   @@map("Usuarios")
 }
@@ -32,10 +25,11 @@ model Denuncia {
   IdUsuario   Int
   Nome        String   @db.VarChar(255)
   Descricao   String   @db.Text
-  Ativa       Boolean  @default(true) @db.Bit
+  Ativa       Boolean  @default(true)
   Inclusao    DateTime @default(now())
   Atualizacao DateTime @updatedAt
-  
+  Status      String   @default("Aberta", map: "DF_Denuncias_Status") @db.NVarChar(50)
+  Prioridade  String   @default("Média", map: "DF_Denuncias_Prioridade") @db.NVarChar(50)
   usuario     Usuario  @relation(fields: [IdUsuario], references: [IdUsuario])
 
   @@map("Denuncias")
@@ -46,10 +40,9 @@ model Aviso {
   IdUsuario   Int
   Nome        String   @db.VarChar(255)
   Descricao   String   @db.Text
-  Ativa       Boolean  @default(true) @db.Bit
+  Ativa       Boolean  @default(true)
   Inclusao    DateTime @default(now())
   Atualizacao DateTime @updatedAt
-  
   usuario     Usuario  @relation(fields: [IdUsuario], references: [IdUsuario])
 
   @@map("Avisos")
